@@ -26,21 +26,22 @@ public class juegoWordle {
 				System.out.print(">");
 				palabra = entrada.nextLine();
 				System.out.println(compruebaLetrasAcertadas(palabra));
-				numIntentosConsumidos++;
-				if (haGanadoJugador(palabra)) {
+				if (haGanadoJugador(numLetrasAdivinadas)) {
 					System.out.println("Has ganado!");
 					estadisticasHumano++;
-					System.out.println("Tú: "+estadisticasHumano+" puntos vs Máquina: "+estadisticasMaquina+" punto");
+					System.out.println("Tú: "+estadisticasHumano+" punto/s vs Máquina: "+estadisticasMaquina+" punto/s");
 					break;
 				}
 				else if (haTerminadoJuego(numIntentosConsumidos)) {
 					System.out.println("Has perdido!");
 					estadisticasMaquina++;
-					System.out.println("Tú: "+estadisticasHumano+" puntos vs Máquina: "+estadisticasMaquina+" punto");
+					System.out.println("Tú: "+estadisticasHumano+" punto/s vs Máquina: "+estadisticasMaquina+" punto/s");
 					break;
 				}
-			}while (!palabra.equals(palabraSecreta));
+				numIntentosConsumidos++;
+			}while (!haGanadoJugador(numLetrasAdivinadas) || !haTerminadoJuego(numIntentosConsumidos));
 			numIntentosConsumidos=0;
+			numLetrasAdivinadas=0;
 
 			System.out.println("¿Deseas jugar otra partida? (S/N)");
 			opcion = entrada.nextLine().charAt(0);
@@ -67,18 +68,46 @@ public class juegoWordle {
 
 	public static String compruebaLetrasAcertadas(String palabraIntroducida) {
 		String comprobacion = "";
+		boolean vocalesSeguidas=false;
+		boolean consonantesSeguidas=false;
 		palabraIntroducida = palabraIntroducida.toUpperCase();
 
 		for (int i = 0; i < palabraSecreta.length(); i++) {
 
-			if (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z') {
+			int contadorVocales=0;
+			int contadorVocalesSeguidas=0;
+			int contadorConsonantesSeguidas=0;
+
+			if (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z'
+					|| palabraIntroducida.lastIndexOf('Q') == 4 || palabraIntroducida.lastIndexOf('W') == 4 || palabraIntroducida.lastIndexOf('X') == 4
+					|| palabraIntroducida.charAt(0) == ('A') && palabraIntroducida.charAt(1) == ('A') || palabraIntroducida.charAt(1) == ('A')
+					&& palabraIntroducida.charAt(2) == ('A') || palabraIntroducida.charAt(3) == ('A') && palabraIntroducida.charAt(4) == ('A')||
+					palabraIntroducida.charAt(0) == ('E') && palabraIntroducida.charAt(1) == ('E') || palabraIntroducida.charAt(1) == ('E')
+					&& palabraIntroducida.charAt(2) == ('E') || palabraIntroducida.charAt(3) == ('E') && palabraIntroducida.charAt(4) == ('E')
+					|| palabraIntroducida.charAt(0) == ('I') && palabraIntroducida.charAt(1) == ('I') || palabraIntroducida.charAt(1) == ('I')
+					&& palabraIntroducida.charAt(2) == ('I') || palabraIntroducida.charAt(3) == ('I') && palabraIntroducida.charAt(4) == ('I')
+					|| palabraIntroducida.charAt(0) == ('O') && palabraIntroducida.charAt(1) == ('O') || palabraIntroducida.charAt(1) == ('O')
+					&& palabraIntroducida.charAt(2) == ('O') || palabraIntroducida.charAt(3) == ('O') && palabraIntroducida.charAt(4) == ('O')
+					|| palabraIntroducida.charAt(0) == ('U') && palabraIntroducida.charAt(1) == ('U') || palabraIntroducida.charAt(1) == ('U')
+					&& palabraIntroducida.charAt(2) == ('U') || palabraIntroducida.charAt(3) == ('U') && palabraIntroducida.charAt(4) == ('U')) {
 				do {
 
 					System.out.println("La palabra introducida no cumple los requisitos. Intentalo de nuevo.");
 					palabraIntroducida = entrada.nextLine();
 					palabraIntroducida = palabraIntroducida.toUpperCase();
 
-				} while (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z');
+				} while (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z'
+						|| palabraIntroducida.lastIndexOf('Q') == 4 || palabraIntroducida.lastIndexOf('W') == 4 || palabraIntroducida.lastIndexOf('X') == 4
+						|| palabraIntroducida.charAt(0) == ('A') && palabraIntroducida.charAt(1) == ('A') || palabraIntroducida.charAt(1) == ('A')
+						&& palabraIntroducida.charAt(2) == ('A') || palabraIntroducida.charAt(3) == ('A') && palabraIntroducida.charAt(4) == ('A')||
+						palabraIntroducida.charAt(0) == ('E') && palabraIntroducida.charAt(1) == ('E') || palabraIntroducida.charAt(1) == ('E')
+						&& palabraIntroducida.charAt(2) == ('E') || palabraIntroducida.charAt(3) == ('E') && palabraIntroducida.charAt(4) == ('E')
+						|| palabraIntroducida.charAt(0) == ('I') && palabraIntroducida.charAt(1) == ('I') || palabraIntroducida.charAt(1) == ('I')
+						&& palabraIntroducida.charAt(2) == ('I') || palabraIntroducida.charAt(3) == ('I') && palabraIntroducida.charAt(4) == ('I')
+						|| palabraIntroducida.charAt(0) == ('O') && palabraIntroducida.charAt(1) == ('O') || palabraIntroducida.charAt(1) == ('O')
+						&& palabraIntroducida.charAt(2) == ('O') || palabraIntroducida.charAt(3) == ('O') && palabraIntroducida.charAt(4) == ('O')
+						|| palabraIntroducida.charAt(0) == ('U') && palabraIntroducida.charAt(1) == ('U') || palabraIntroducida.charAt(1) == ('U')
+						&& palabraIntroducida.charAt(2) == ('U') || palabraIntroducida.charAt(3) == ('U') && palabraIntroducida.charAt(4) == ('U'));
 
 			}
 		}
@@ -87,6 +116,7 @@ public class juegoWordle {
 
 				if (palabraIntroducida.charAt(i) == palabraSecreta.charAt(i)) {
 					comprobacion += palabraIntroducida.toUpperCase().charAt(i);
+					numLetrasAdivinadas++;
 				} else if (palabraSecreta.indexOf(letraIntroducida) != -1) {
 					comprobacion += palabraIntroducida.toLowerCase().charAt(i);
 				} else {
@@ -95,10 +125,10 @@ public class juegoWordle {
 			}
 		return comprobacion;
 	}
-	public static boolean haGanadoJugador (String palabra) {
-        return palabra.equals(palabraSecreta);
+	public static boolean haGanadoJugador (int letras) {
+        return numLetrasAdivinadas==5;
     }
 	public static boolean haTerminadoJuego (int numIntentosConsumidos) {
-        return numIntentosConsumidos == 6;
+        return numIntentosConsumidos==6;
     }
 }
