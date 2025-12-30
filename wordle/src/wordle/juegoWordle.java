@@ -81,14 +81,13 @@ public class juegoWordle {
 		//Ponemos a 0 todas las variables que se van a usar.
 		int contadorConsonantes=0;
 		int contadorVocales=0;
+		boolean contadorVocalesSeguidas=false;
 		numLetrasAdivinadas=0;
-
 
 		//Introducimos la palabra en el array, letra por letra, para hacer las comprobaciones.
 		for (int i = 0; i < 5; i++) {
 			palabra[i] = palabraIntroducida.charAt(i);
 		}
-
 		//Comprobamos si tiene 3 o más consonantes y guardamos el resultado en la variable contadorConsonante.
 		for (int i = 0; i < 5; i++) {
 			if (palabra[i] != 'A' && palabra[i] != 'E' && palabra[i] != 'I' && palabra[i] != 'O' && palabra[i] != 'U') {
@@ -102,7 +101,13 @@ public class juegoWordle {
 				contadorConsonantes=0;
 			}
 		}
-
+		//Aqui vamos a comprobar si tiene dos vocales iguales seguidas
+		for (int i = 0; i < palabra.length; i++) {
+			char[]AEUIO= {'A','E','I','O','U'};
+				if (palabra[i] == AEUIO[i] && palabra[i+1] == AEUIO[i]){
+				contadorVocalesSeguidas=true;
+		}
+				}
 		//Comprobamos en la palabra si hay entre 2 y 3 vocales
 		for (int i = 0; i < 5; i++) {
 			if (palabra[i] == 'A' || palabra[i] == 'E' || palabra[i] == 'I' || palabra[i] == 'O' || palabra[i] == 'U') {
@@ -112,8 +117,7 @@ public class juegoWordle {
 		//Comprobamos en este for si la palabra cumple los requisitos, si no los cumple, entra en bucle hasta que cumpla los requisitos.
 				for (int i = 0; i < palabraSecreta.length(); i++) {
 					if (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z' || contadorVocales>3
-							|| contadorVocales<2|| contadorConsonantes>2 || palabra[4] == 'Q' || palabra[4] == 'W' || palabra[4] == 'X'
-							|| palabra[0] == palabra[1] || palabra[1] == palabra[2] || palabra[2] == palabra[3] || palabra[3] == palabra[4]) {
+							|| contadorVocales<2|| contadorConsonantes>2 || contadorVocalesSeguidas) {
 						do {
 
 							System.out.println("La palabra introducida no cumple los requisitos. Intentalo de nuevo.");
@@ -143,9 +147,16 @@ public class juegoWordle {
 								}
 							}
 
+							//Comprobamos en este array que la palabra no tenga dos vocales iguales seguidas para pasar la variable a false.
+							for (int j = 0; j < palabra.length; j++) {
+								char[]AEUIO= {'A','E','I','O','U'};
+								if (palabra[j] == AEUIO[j] && palabra[j+1] != AEUIO[j]){
+									contadorVocalesSeguidas=false;
+								}
+							}
+
 						} while (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z' || contadorVocales>3
-								|| contadorVocales<2|| contadorConsonantes>2 || palabra[4] == 'Q' || palabra[4] == 'W' || palabra[4] == 'X'
-								|| palabra[0] == palabra[1] || palabra[1] == palabra[2] || palabra[2] == palabra[3] || palabra[3] == palabra[4]);
+								|| contadorVocales<2|| contadorConsonantes>2 || contadorVocalesSeguidas);
 
 					}
 				}
