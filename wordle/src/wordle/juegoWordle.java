@@ -117,7 +117,8 @@ public class juegoWordle {
 		//Comprobamos en este for si la palabra cumple los requisitos, si no los cumple, entra en bucle hasta que cumpla los requisitos.
 				for (int i = 0; i < palabraSecreta.length(); i++) {
 					if (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z' || contadorVocales>3
-							|| contadorVocales<2|| contadorConsonantes>2 || contadorVocalesSeguidas) {
+							|| contadorVocales<2|| contadorConsonantes>2 ||palabraIntroducida.charAt(4) == 'X' || palabraIntroducida.charAt(4) == 'W'
+							|| palabraIntroducida.charAt(4) == 'Q' || contadorVocalesSeguidas) {
 						do {
 
 							System.out.println("La palabra introducida no cumple los requisitos. Intentalo de nuevo.");
@@ -156,7 +157,8 @@ public class juegoWordle {
 							}
 
 						} while (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z' || contadorVocales>3
-								|| contadorVocales<2|| contadorConsonantes>2 || contadorVocalesSeguidas);
+								|| contadorVocales<2|| contadorConsonantes>2 ||palabraIntroducida.charAt(4) == 'X' || palabraIntroducida.charAt(4) == 'W'
+								|| palabraIntroducida.charAt(4) == 'Q' || contadorVocalesSeguidas);
 
 					}
 				}
