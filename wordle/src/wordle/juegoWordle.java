@@ -1,5 +1,6 @@
 package wordle;
 
+import javax.imageio.metadata.IIOMetadataFormatImpl;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -102,10 +103,12 @@ public class juegoWordle {
 			}
 		}
 		//Aqui vamos a comprobar si tiene dos vocales iguales seguidas
-		for (int i = 0; i < palabra.length; i++) {
+		for (int i = 0; i < palabra.length-1; i++) {
 			char[]AEUIO= {'A','E','I','O','U'};
-				if (palabra[i] == AEUIO[i] && palabra[i+1] == AEUIO[i]){
-				contadorVocalesSeguidas=true;
+			for (int j = 0; j < palabra.length-1; j++) {
+				if (palabra[j] == AEUIO[i] && palabra[j+1] == AEUIO[i]){
+					contadorVocalesSeguidas=true;
+			}
 		}
 				}
 		//Comprobamos en la palabra si hay entre 2 y 3 vocales
@@ -129,38 +132,39 @@ public class juegoWordle {
 								palabra[j] = palabraIntroducida.charAt(j);
 							}
 							// Reiniciamos contadores de consonantes y vocales.
-							contadorConsonantes=0;
-							contadorVocales=0;
+							contadorConsonantes = 0;
+							contadorVocales = 0;
 							for (int j = 1; j < 5; j++) {
 								if (palabra[j] != 'A' && palabra[j] != 'E' && palabra[j] != 'I' && palabra[j] != 'O' && palabra[j] != 'U') {
-									contadorConsonantes+=1;
-								} else if (contadorConsonantes>2) {
+									contadorConsonantes += 1;
+								} else if (contadorConsonantes > 2) {
 									break;
 								} else {
-									contadorConsonantes=0;
+									contadorConsonantes = 0;
 								}
 							}
 
 							//Comprobamos en la palabra si hay entre 2 y 3 vocales
 							for (int j = 0; j < 5; j++) {
 								if (palabra[j] == 'A' || palabra[j] == 'E' || palabra[j] == 'I' || palabra[j] == 'O' || palabra[j] == 'U') {
-									contadorVocales+=1;
+									contadorVocales += 1;
 								}
 							}
 
 							//Comprobamos en este array que la palabra no tenga dos vocales iguales seguidas para pasar la variable a false.
-							for (int j = 0; j < palabra.length; j++) {
-								char[]AEUIO= {'A','E','I','O','U'};
-								if (palabra[j] == AEUIO[j] && palabra[j+1] != AEUIO[j]){
-									contadorVocalesSeguidas=false;
+							for (int j = 0; j < palabra.length - 1; j++) {
+								char[] AEUIO = {'A', 'E', 'I', 'O', 'U'};
+								for (int k = 0; k < palabra.length - 1; k++) {
+									if (palabra[j] == AEUIO[i] && palabra[j+1] != AEUIO[i]) {
+										contadorVocalesSeguidas = false;
+									}
 								}
 							}
+						}while (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z' || contadorVocales > 3
+								|| contadorVocales < 2 || contadorConsonantes > 2 || palabraIntroducida.charAt(4) == 'X' || palabraIntroducida.charAt(4) == 'W'
+								|| palabraIntroducida.charAt(4) == 'Q' || contadorVocalesSeguidas) ;
 
-						} while (palabraIntroducida.length() != 5 || palabraIntroducida.charAt(i) < 'A' || palabraIntroducida.charAt(i) > 'Z' || contadorVocales>3
-								|| contadorVocales<2|| contadorConsonantes>2 ||palabraIntroducida.charAt(4) == 'X' || palabraIntroducida.charAt(4) == 'W'
-								|| palabraIntroducida.charAt(4) == 'Q' || contadorVocalesSeguidas);
-
-					}
+						}
 				}
 				//Hacemos un for para comprobar la palabra introducida con la palabra secreta.
 				for (int i = 0; i < palabraSecreta.length(); i++) {
