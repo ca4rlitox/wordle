@@ -1,6 +1,5 @@
 package wordle;
 
-import javax.imageio.metadata.IIOMetadataFormatImpl;
 import java.util.Random;
 import java.util.Scanner;
 
