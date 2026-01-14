@@ -13,7 +13,7 @@ public class juegoWordle {
 	public static void main(String[] args) {
 
 		//Inicializamos variables que vamos a usar.
-		String palabra="";
+		String palabra;
 		char opcion;
 		int estadisticasMaquina=0;
 		int estadisticasHumano=0;
