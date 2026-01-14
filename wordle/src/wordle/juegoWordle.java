@@ -1,11 +1,10 @@
 package wordle;
 
+import javax.imageio.metadata.IIOMetadataFormatImpl;
 import java.util.Random;
 import java.util.Scanner;
 
 public class juegoWordle {
-	
-	//Wordle hecho por Carlos Martín y Nicole
 
 	static String palabraSecreta;
 	static int numIntentosConsumidos=0;
@@ -27,10 +26,10 @@ public class juegoWordle {
 			//Usamos la función generaPalabra() que no devuelve nada, pero aleatoriamente elige la palabra y se almacena en la variable global palabraSecreta.
 			generaPalabra();
 			do {
+				numIntentosConsumidos++;
 				System.out.print(">");
 				palabra = entrada.nextLine();
 				System.out.println(compruebaLetrasAcertadas(palabra));
-				numIntentosConsumidos++;
 				//Comprobamos si la función haGanadoJugador es verdadera para darle la victoria al jugador.
 				if (haGanadoJugador(numLetrasAdivinadas)) {
 					System.out.println("Has ganado!");
@@ -46,7 +45,7 @@ public class juegoWordle {
 					break;
 				}
 				//Generamos bucle mientras las funciones haGanadoJugador y haTerminadoJuego sean falsas.
-			}while (!haGanadoJugador(numLetrasAdivinadas) && !haTerminadoJuego(numIntentosConsumidos));
+			}while (!haGanadoJugador(numLetrasAdivinadas) || !haTerminadoJuego(numIntentosConsumidos));
 			//Reinicializamos la variable numIntentosConsumidos a 0 para la próxima partida.
 			numIntentosConsumidos=0;
 			System.out.println("¿Deseas jugar otra partida? (S/N)");
@@ -77,7 +76,7 @@ public class juegoWordle {
 		//Creamos variable con el resultado que vamos a devolver
 		String comprobacion = "";
 		//Hacemos el array para despues almacenar en él todas las letras.
-		char[] palabra = new char[palabraSecreta.length()];
+		char[] palabra = new char[palabraIntroducida.length()];
 		//Pasamos la palabra a mayusculas para hacer las comprobaciones
 		palabraIntroducida = palabraIntroducida.toUpperCase();
 		//Ponemos a 0 todas las variables que se van a usar.
@@ -91,7 +90,7 @@ public class juegoWordle {
 			palabra[i] = palabraIntroducida.charAt(i);
 		}
 		//Comprobamos si tiene 3 o más consonantes y guardamos el resultado en la variable contadorConsonante.
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < palabra.length; i++) {
 			if (palabra[i] != 'A' && palabra[i] != 'E' && palabra[i] != 'I' && palabra[i] != 'O' && palabra[i] != 'U') {
 				contadorConsonantes+=1;
 			}
@@ -113,7 +112,7 @@ public class juegoWordle {
 		}
 				}
 		//Comprobamos en la palabra si hay entre 2 y 3 vocales
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < palabra.length; i++) {
 			if (palabra[i] == 'A' || palabra[i] == 'E' || palabra[i] == 'I' || palabra[i] == 'O' || palabra[i] == 'U') {
 				contadorVocales+=1;
 			}
@@ -129,13 +128,13 @@ public class juegoWordle {
 							System.out.print(">");
 							palabraIntroducida = entrada.nextLine();
 							palabraIntroducida = palabraIntroducida.toUpperCase();
-							for (int j = 0; j < palabraIntroducida.length(); j++) {
+							for (int j = 0; j < palabra.length; j++) {
 								palabra[j] = palabraIntroducida.charAt(j);
 							}
 							// Reiniciamos contadores de consonantes y vocales.
 							contadorConsonantes = 0;
 							contadorVocales = 0;
-							for (int j = 1; j < palabraIntroducida.length(); j++) {
+							for (int j = 1; j < palabra.length; j++) {
 								if (palabra[j] != 'A' && palabra[j] != 'E' && palabra[j] != 'I' && palabra[j] != 'O' && palabra[j] != 'U') {
 									contadorConsonantes += 1;
 								} else if (contadorConsonantes > 2) {
@@ -146,16 +145,16 @@ public class juegoWordle {
 							}
 
 							//Comprobamos en la palabra si hay entre 2 y 3 vocales
-							for (int j = 0; j < palabraIntroducida.length(); j++) {
+							for (int j = 0; j < palabra.length; j++) {
 								if (palabra[j] == 'A' || palabra[j] == 'E' || palabra[j] == 'I' || palabra[j] == 'O' || palabra[j] == 'U') {
 									contadorVocales += 1;
 								}
 							}
 
 							//Comprobamos en este array que la palabra no tenga dos vocales iguales seguidas para pasar la variable a false.
-							for (int j = 0; j < palabraIntroducida.length() - 1; j++) {
+							for (int j = 0; j < palabra.length - 1; j++) {
 								char[] AEUIO = {'A', 'E', 'I', 'O', 'U'};
-								for (int k = 0; k < palabraIntroducida.length() - 1; k++) {
+								for (int k = 0; k < palabra.length - 1; k++) {
 									if (palabra[j] == AEUIO[i] && palabra[j+1] != AEUIO[i]) {
 										contadorVocalesSeguidas = false;
 									}
